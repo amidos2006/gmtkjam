@@ -1,0 +1,946 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://room.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Flash.gd" type="Script" id=3]
+[ext_resource path="res://UI.gd" type="Script" id=4]
+[ext_resource path="res://healthUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://swordUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://losing_control.wav" type="AudioStream" id=7]
+[ext_resource path="res://Pause.gd" type="Script" id=8]
+[ext_resource path="res://global.gd" type="Script" id=9]
+[ext_resource path="res://Enemies.gd" type="Script" id=11]
+[ext_resource path="res://button.png" type="Texture" id=13]
+[ext_resource path="res://Keyboard.gd" type="Script" id=14]
+[ext_resource path="res://break.wav" type="AudioStream" id=16]
+[ext_resource path="res://kill.wav" type="AudioStream" id=18]
+[ext_resource path="res://GameTitle.gd" type="Script" id=19]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 13 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 13 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 13 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 13 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "2",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "0",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "1",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "4",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "3",
+"speed": 5.0
+} ]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="room" parent="Background" instance=ExtResource( 2 )]
+position = Vector2( 320, 180 )
+
+[node name="scream" type="AudioStreamPlayer2D" parent="Background/room"]
+stream = ExtResource( 18 )
+
+[node name="Objects" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Player" parent="Objects" instance=ExtResource( 1 )]
+position = Vector2( 321, 183 )
+
+[node name="Enemies" type="Node2D" parent="Objects"]
+script = ExtResource( 11 )
+
+[node name="Overlayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Pause" type="Control" parent="Overlayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -105.0
+margin_top = -64.0
+margin_right = -65.0
+margin_bottom = -24.0
+rect_scale = Vector2( 5.04, 1.56 )
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -106.0
+margin_top = 8.99997
+margin_right = -66.0
+margin_bottom = 49.0
+rect_scale = Vector2( 5.04, 1.56 )
+color = Color( 0, 0, 0, 0.501961 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 8, 8 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -111.809
+margin_top = -14.3736
+margin_right = 95.1905
+margin_bottom = -0.373566
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 10, 8 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -111.968
+margin_top = -14.3736
+margin_right = 95.0318
+margin_bottom = -0.373566
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 12, 8 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+rect_pivot_offset = Vector2( 8, 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 14, 8 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/4"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 16, 8 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/5"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="6" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 19.4508, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/6"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="7" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 21.8317, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/7"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="8" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 24.2126, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/8"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="9" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 26.5936, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/9"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 28.7761, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/0"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="-" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 30.9587, 7.92822 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/-"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Q" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 9.33813, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/Q"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="W" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 11.3223, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/W"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="E" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 13.5048, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/E"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 15.6873, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/R"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="T" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 18.0682, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/T"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Y" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 20.4492, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/Y"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="U" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 23.0286, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/U"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="I" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 25.211, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/I"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="O" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 27.592, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/O"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="P" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 29.7745, 16.4975 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/P"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="A" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 10.1254, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/A"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 12.5064, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/S"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="D" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 14.6889, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/D"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="F" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 16.8714, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/F"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="G" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 19.2524, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/G"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="H" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 21.8318, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/H"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="J" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 24.2127, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/J"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="K" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 26.5936, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/K"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="L" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 28.9747, 24.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/L"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Z" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 11.3159, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/Z"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="X" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 13.8952, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/X"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="C" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 16.0778, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/C"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="V" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 18.6572, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/V"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 21.0381, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/B"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="N" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 23.2207, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/N"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="M" type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 25.8, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/M"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="," type="AnimatedSprite" parent="Overlayer/Pause/ColorRect2"]
+position = Vector2( 28.1809, 32.9282 )
+scale = Vector2( 0.1, 0.35 )
+frames = SubResource( 6 )
+animation = "4"
+
+[node name="Label" type="Label" parent="Overlayer/Pause/ColorRect2/,"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rightText" type="Label" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -61.0
+margin_top = -49.5
+margin_right = 61.0
+margin_bottom = -18.5
+text = "Pick a new button
+for Right"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="upText" type="Label" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -61.0
+margin_top = -49.5
+margin_right = 61.0
+margin_bottom = -18.5
+text = "Pick a new button
+for Up"
+align = 1
+valign = 1
+
+[node name="downText" type="Label" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -61.0
+margin_top = -49.5
+margin_right = 61.0
+margin_bottom = -18.5
+text = "Pick a new button
+for Down"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="leftText" type="Label" parent="Overlayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -61.0
+margin_top = -49.5
+margin_right = 61.0
+margin_bottom = -18.5
+text = "Pick a new button
+for Left"
+align = 1
+valign = 1
+
+[node name="break" type="AudioStreamPlayer2D" parent="Overlayer/Pause"]
+stream = ExtResource( 16 )
+
+[node name="UI" type="Control" parent="Overlayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="health1" parent="Overlayer/UI" instance=ExtResource( 5 )]
+margin_left = -39.0
+margin_top = 14.0
+margin_right = -39.0
+margin_bottom = 14.0
+
+[node name="health2" parent="Overlayer/UI" instance=ExtResource( 5 )]
+margin_left = 8.0
+margin_top = 14.0
+margin_right = 8.0
+margin_bottom = 14.0
+
+[node name="health3" parent="Overlayer/UI" instance=ExtResource( 5 )]
+margin_left = 57.0
+margin_top = 14.0
+margin_right = 57.0
+margin_bottom = 14.0
+
+[node name="sword1" parent="Overlayer/UI" instance=ExtResource( 6 )]
+margin_left = 32.0
+margin_top = 140.0
+margin_right = -608.0
+margin_bottom = -220.0
+rect_rotation = 90.0
+
+[node name="sword2" parent="Overlayer/UI" instance=ExtResource( 6 )]
+margin_left = 32.0
+margin_top = 180.0
+margin_right = -608.0
+margin_bottom = -180.0
+rect_rotation = 90.0
+
+[node name="sword3" parent="Overlayer/UI" instance=ExtResource( 6 )]
+margin_left = 32.0
+margin_top = 220.0
+margin_right = -608.0
+margin_bottom = -140.0
+rect_rotation = 90.0
+
+[node name="sword4" parent="Overlayer/UI" instance=ExtResource( 6 )]
+margin_left = 280.0
+margin_top = 340.0
+margin_right = -360.0
+margin_bottom = -20.0
+
+[node name="sword5" parent="Overlayer/UI" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_top = -20.0
+margin_right = 0.0
+margin_bottom = -20.0
+
+[node name="sword6" parent="Overlayer/UI" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = 40.0
+margin_top = -20.0
+margin_right = 40.0
+margin_bottom = -20.0
+
+[node name="sword7" parent="Overlayer/UI" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = 288.0
+margin_top = -140.0
+margin_right = 288.0
+margin_bottom = -140.0
+rect_rotation = -90.0
+
+[node name="sword8" parent="Overlayer/UI" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = 288.0
+margin_top = -180.0
+margin_right = 288.0
+margin_bottom = -180.0
+rect_rotation = -90.0
+
+[node name="sword9" parent="Overlayer/UI" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = 288.0
+margin_top = -220.0
+margin_right = 288.0
+margin_bottom = -220.0
+rect_rotation = -90.0
+
+[node name="Flash" type="ColorRect" parent="Overlayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameTitle" type="Control" parent="Overlayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+autoplay = true

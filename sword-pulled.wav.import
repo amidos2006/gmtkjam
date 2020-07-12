@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sword-pulled.wav-0581e0ba16ca45ddb264b6a3a5838adc.sample"
+
+[deps]
+
+source_file="res://sword-pulled.wav"
+dest_files=[ "res://.import/sword-pulled.wav-0581e0ba16ca45ddb264b6a3a5838adc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
