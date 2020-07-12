@@ -5,26 +5,32 @@ const COIN = preload("res://coin.tscn")
 const CHASER_ENEMY = preload("res://chaserEnemy.tscn")
 const STATIC_ENEMY = preload("res://staticEnemy.tscn")
 const LINE_ENEMY = preload("res://lineEnemy.tscn")
+const RAND_ENEMY = preload("res://randomEnemy.tscn")
 
 const ENEMY_TYPES = [
-	[0, 0, 0],
-	[4, 0, 0],
-	[0, 4, 0],
-	[0, 0, 2],
-	[4, 0, 2],
-	[0, 3, 2],
-	[4, 3, 2],
-	[3, 3, 3]
+	[0, 0, 0, 0],
+	[4, 0, 0, 0],
+	[0, 4, 0, 0],
+	[0, 0, 0, 2],
+	[4, 0, 0, 2],
+	[0, 3, 0, 2],
+	[4, 3, 0, 2],
+	[3, 3, 0, 3],
+	[3, 3, 0, 3],
+	[3, 3, 0, 3]
 ]
 
 const RANDOM_TYPES = [
-	[0, 0, 0],
-	[2, 0, 0],
-	[0, 1, 0],
-	[0, 0, 1],
-	[1, 0, 1],
-	[2, 2, 1],
-	[2, 2, 2]
+	[0, 0, 0, 0],
+	[2, 0, 0, 0],
+	[0, 1, 0, 0],
+	[0, 0, 0, 1],
+	[1, 0, 0, 1],
+	[2, 2, 0, 1],
+	[2, 2, 0, 2],
+	[2, 2, 0, 2],
+	[2, 2, 0, 2],
+	[2, 2, 0, 2]
 ]
 
 var firstTime = true
@@ -66,10 +72,11 @@ func _process(delta):
 		
 		firstTime = false
 		var level = min($"/root/Global".level, ENEMY_TYPES.size())
-		var enemies = [0, 0, 0]
+		var enemies = [0, 0, 0, 0]
 		enemies[0] += ENEMY_TYPES[level][0] + randi() % (RANDOM_TYPES[level][0] + 1)
 		enemies[1] += ENEMY_TYPES[level][1] + randi() % (RANDOM_TYPES[level][1] + 1)
 		enemies[2] += ENEMY_TYPES[level][2] + randi() % (RANDOM_TYPES[level][2] + 1)
+		enemies[3] += ENEMY_TYPES[level][3] + randi() % (RANDOM_TYPES[level][3] + 1)
 		for i in range(0, enemies[0]):
 			var enemy = STATIC_ENEMY.instance()
 			self.add_child(enemy)
@@ -79,13 +86,22 @@ func _process(delta):
 			self.add_child(enemy)
 			enemy.global_position = get_new_position(i)
 		for i in range(0, enemies[2]):
-			var enemy = CHASER_ENEMY.instance()
+			var enemy = RAND_ENEMY.instance()
+			self.add_child(enemy)
+			enemy.global_position = get_new_position(i)
+		for i in range(0, enemies[3]):
+			var enemy = RAND_ENEMY.instance()
 			self.add_child(enemy)
 			enemy.global_position = get_new_position(i)
 			
-	if $"/root/Global".room.collected >= $"/root/Global".room.MAX_COINS && Input.is_key_pressed(KEY_SPACE):
-		$"/root/Global".level += 1
-		firstTime = true
-		$"/root/Global".room.collected = 0
-		$"/root/Global".flash.flash()
+	if $"/root/Global".room.collected >= $"/root/Global".room.MAX_COINS:
+		if $"/root/Global".level < 10:
+			if Input.is_key_pressed(KEY_SPACE):
+				$"/root/Global".level += 1
+				$"/root/Global".player.global_position = Vector2(320, 180)
+				firstTime = true
+				$"/root/Global".room.collected = 0
+				$"/root/Global".flash.flash()
+		else:
+			pass
 		

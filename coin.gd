@@ -24,6 +24,8 @@ func _get_far_loc(center, size, relative):
 	return location	
 
 func _on_Coin_body_entered(body):
+	if $"/root/Global".player == null:
+		return
 	if "Player" in body.name:
 		if $"/root/Global".room.coin_collected():
 			$CPUParticles2D.restart()
@@ -33,7 +35,10 @@ func _on_Coin_body_entered(body):
 			var center = $"/root/Global".room.global_position
 			var size = $"/root/Global".room.get_node("coinarea").shape.extents
 			position = _get_far_loc(center, size, $"/root/Global".player.global_position)
-	if "room" in body.name:
+	else:
+		$CPUParticles2D.restart()
+		$Sprite.scale.x = 0
+		$Sprite.scale.y = 0
 		var center = $"/root/Global".room.global_position
 		var size = $"/root/Global".room.get_node("coinarea").shape.extents
 		position = _get_far_loc(center, size, $"/root/Global".player.global_position)

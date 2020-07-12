@@ -1,20 +1,24 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://room.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Victory.png" type="Texture" id=2]
 [ext_resource path="res://Flash.gd" type="Script" id=3]
 [ext_resource path="res://UI.gd" type="Script" id=4]
 [ext_resource path="res://healthUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://swordUI.tscn" type="PackedScene" id=6]
-[ext_resource path="res://losing_control.wav" type="AudioStream" id=7]
+[ext_resource path="res://room0.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Pause.gd" type="Script" id=8]
 [ext_resource path="res://global.gd" type="Script" id=9]
+[ext_resource path="res://losing_control.wav" type="AudioStream" id=10]
 [ext_resource path="res://Enemies.gd" type="Script" id=11]
+[ext_resource path="res://Defeat.png" type="Texture" id=12]
 [ext_resource path="res://button.png" type="Texture" id=13]
 [ext_resource path="res://Keyboard.gd" type="Script" id=14]
+[ext_resource path="res://RestartButton.png" type="Texture" id=15]
 [ext_resource path="res://break.wav" type="AudioStream" id=16]
-[ext_resource path="res://kill.wav" type="AudioStream" id=18]
-[ext_resource path="res://GameTitle.gd" type="Script" id=19]
+[ext_resource path="res://Background.gd" type="Script" id=17]
+[ext_resource path="res://NextLvl.png" type="Texture" id=18]
+[ext_resource path="res://Gameover.gd" type="Script" id=19]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 13 )
@@ -69,12 +73,10 @@ script = ExtResource( 9 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = 0
+script = ExtResource( 17 )
 
-[node name="room" parent="Background" instance=ExtResource( 2 )]
+[node name="room1" parent="Background" instance=ExtResource( 7 )]
 position = Vector2( 320, 180 )
-
-[node name="scream" type="AudioStreamPlayer2D" parent="Background/room"]
-stream = ExtResource( 18 )
 
 [node name="Objects" type="CanvasLayer" parent="."]
 layer = 10
@@ -922,6 +924,38 @@ margin_right = 288.0
 margin_bottom = -220.0
 rect_rotation = -90.0
 
+[node name="Gameover" type="Control" parent="Overlayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Victory" type="Sprite" parent="Overlayer/Gameover"]
+visible = false
+position = Vector2( 320, 130 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Defeat" type="Sprite" parent="Overlayer/Gameover"]
+visible = false
+position = Vector2( 320, 130 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 12 )
+
+[node name="RestartButton" type="Sprite" parent="Overlayer/Gameover"]
+visible = false
+position = Vector2( 320, 280 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 15 )
+
+[node name="NextLvl" type="Sprite" parent="Overlayer/Gameover"]
+visible = false
+position = Vector2( 320, 280 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 18 )
+
 [node name="Flash" type="ColorRect" parent="Overlayer"]
 pause_mode = 2
 anchor_right = 1.0
@@ -933,14 +967,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameTitle" type="Control" parent="Overlayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 7 )
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
 autoplay = true
