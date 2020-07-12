@@ -5,10 +5,14 @@ const SPEED = 100
 var timer = 100
 export(Vector2) var dir = Vector2(1, 0)
 
+func _ready():
+	var directions = [Vector2(0, 1), Vector2(0, -1), Vector2(1, 0), Vector2(-1, 0)]
+	dir = directions[randi()%directions.size()]
+
 func _change_direction():
 	if abs(dir.x) > 0:
-		if (dir.x < 0 and $left.is_colliding() and "colliders" in $left.get_collider().name) or\
-			(dir.x > 0 and $right.is_colliding() and "colliders" in $right.get_collider().name):
+		if (dir.x < 0 and $left.is_colliding()) or\
+			(dir.x > 0 and $right.is_colliding()):
 			if !$up.is_colliding():
 				dir.x = 0
 				dir.y = -1
@@ -16,8 +20,8 @@ func _change_direction():
 				dir.x = 0
 				dir.y = 1
 	elif abs(dir.y) > 0:
-		if (dir.y < 0 and $up.is_colliding() and "colliders" in $up.get_collider().name) or\
-			(dir.y > 0 and $down.is_colliding() and "colliders" in $down.get_collider().name):
+		if (dir.y < 0 and $up.is_colliding()) or\
+			(dir.y > 0 and $down.is_colliding()):
 			if !$left.is_colliding():
 				dir.x = -1
 				dir.y = 0
