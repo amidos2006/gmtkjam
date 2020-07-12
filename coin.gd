@@ -19,8 +19,8 @@ func _get_far_loc(center, size, relative):
 	var location = Vector2(relative.x, relative.y)
 	while (location - relative).length() < 100 && trials < 100:
 		trials += 1
-		location.x = rand_range(-size.x/2, size.x/2) + center.x
-		location.y = rand_range(-size.y/2, size.y/2)  + center.y
+		location.x = rand_range(-size.x, size.x) + center.x
+		location.y = rand_range(-size.y, size.y)  + center.y
 	return location	
 
 func _on_Coin_body_entered(body):

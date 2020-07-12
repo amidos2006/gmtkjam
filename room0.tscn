@@ -17,7 +17,7 @@ extents = Vector2( 19, 179 )
 extents = Vector2( 322, 15 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 275, 155 )
+extents = Vector2( 270, 150 )
 
 [node name="room1" type="Node2D"]
 position = Vector2( 0, 1 )

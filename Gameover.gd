@@ -32,5 +32,8 @@ func _process(delta):
 		if $"/root/Global".level >= 11:
 			$Victory.visible = true
 			$RestartButton.visible = true
+			if Input.is_key_pressed(KEY_SPACE):
+				$"/root/Global".level = 0
+				get_tree().reload_current_scene()
 		else:
 			$NextLvl.visible = true
